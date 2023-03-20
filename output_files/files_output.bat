@@ -1,0 +1,15 @@
+./css/bootstrap.min.css
+./css/main.css
+http://books.toscrape.com
+http://books.toscrape.com
+http://books.toscrape.com
+http://quotes.toscrape.com/
+http://quotes.toscrape.com
+http://quotes.toscrape.com/
+http://quotes.toscrape.com/scroll
+http://quotes.toscrape.com/js
+http://quotes.toscrape.com/js-delayed
+http://quotes.toscrape.com/tableful
+http://quotes.toscrape.com/login
+http://quotes.toscrape.com/search.aspx
+http://quotes.toscrape.com/random
