@@ -1,7 +1,7 @@
 # ScriptingProject2
 <h1>Ethical Hacking Project</h1>
 <h2>By Elie Hanna</h2>
-![image](https://user-images.githubusercontent.com/89582085/226606652-b6b5ba4d-102d-4eeb-b414-8bca5e6e853e.png)
+![image](istockphoto-1297795284-170667a.jpg)
 
 <h2>Project</h2>
 I wrote a Python script that takes a URL as its first argument and performs some operations on it. The script uses the requests library to retrieve the HTML content of the URL and then uses regular expressions to extract various information from it. Specifically, the script extracts all of the URLs contained in the HTML and writes them to a file called files_output.bat. Additionally, the script reads two input files called dirs_dictionary.bat and subdomains_dictionary.bat that contain lists of directories and subdomains to try, respectively. For each directory and subdomain, the script constructs a full URL by appending it to the original URL and then sends a GET request to that URL. If the request succeeds (i.e., returns a status code between 200 and 299), the script writes the URL to either directories_output.bat or subdomains_output.bat, depending on whether it was a directory or subdomain that was tried.
