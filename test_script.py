@@ -22,8 +22,6 @@ with open('./input_files/dirs_dictionary.bat', 'r') as file: #read dirs_dictiona
         for line in file: #iterate over given directories
             full_url = url+line
 
-            print(full_url) #for testing
-
             get = requests.get(full_url)
             #if the request succeeds, it means the url is valid
             if get.status_code in range(200,299):
@@ -40,8 +38,6 @@ with open('./input_files/subdomains_dictionary.bat', 'r') as file2: #read subdom
         full_url2 = f"{parts.group(1) or 'https://'}{line.strip()}.{parts.group(2)}{parts.group(3)}"
         #using strip to remove the trailing new line and get a full link
 
-        print(full_url2) #for testing
-
         get2 = requests.get(full_url2)
         #if the request succeeds, it means the url is valid
         if get2.status_code in range(200,299):
@@ -54,18 +50,28 @@ directories_output.close()
 subdomains_output.close()
 
 #Bonus Part
-#URL of the login page (assuming it is given)
+#URL of the website and of the login page (assuming it is given)
+
+website = "http://quotes.toscrape.com"
 login_url = "http://quotes.toscrape.com/login"
+
 
 #login credentials
 username = "charbel_daoud"
 passwords = ["nabiha", "jamile", "nabiha@jamile"]  #list of passwords to try, I bet it is nabiha@jamile
 
 #sending a GET request to the login page to get the cookies
-session = requests.session()
+session = requests.Session()
 response = session.get(login_url)
-post_url = re.search(r'<form .*?action="(.+?)"', response.text).group(1) #extract the POST URL
-csrf_token = re.search(r'<input type="hidden" name="csrf_token" value="(.+?)">', response.text).group(1)
+
+
+#extract post url from the login page using regex
+post_url_match = re.search(r'<form.+?action="([^"]+)"', response.text).group(1)
+post_url = website + post_url_match
+
+# extract the CSRF token from the login page using regex
+csrf_token = re.search(r'<input.*?name=".*csrf.*?".*?value="(\w*?)"\/>', response.text).group(1)
+
 
 #try to login using the passwords
 for password in passwords:
@@ -81,7 +87,7 @@ for password in passwords:
     
     #check if the login was successful
     if "Welcome, " in response.text:
-        print(f"Login successful with password: {password}")
+        print("Login successful with password: " + password)
         break
     else:
-        print(f"Login failed with password: {password}")
+        print("Login failed with password: " + password)
