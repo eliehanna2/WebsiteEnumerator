@@ -37,7 +37,8 @@ with open('./input_files/subdomains_dictionary.bat', 'r') as file2: #read subdom
         parts = re.match(r'(https?://)?([\w\.]+)(.*)', url)
         
         # Insert the subdomain using regex
-        full_url2 = f"{parts.group(1) or 'https://'}{line}.{parts.group(2)}{parts.group(3)}"
+        full_url2 = f"{parts.group(1) or 'https://'}{line.strip()}.{parts.group(2)}{parts.group(3)}"
+        #using strip to remove the trailing new line and get a full link
 
         print(full_url2) #for testing
 
@@ -46,8 +47,41 @@ with open('./input_files/subdomains_dictionary.bat', 'r') as file2: #read subdom
         if get2.status_code in range(200,299):
             subdomains_output.write(full_url2) #append the url to subdomains_output file
             subdomains_output.write("\n")
-file2.close() # Close the file
+file2.close() # Close the files
 
 files_output.close()
 directories_output.close()
 subdomains_output.close()
+
+#Bonus Part
+#URL of the login page (assuming it is given)
+login_url = "http://quotes.toscrape.com/login"
+
+#login credentials
+username = "charbel_daoud"
+passwords = ["nabiha", "jamile", "nabiha@jamile"]  #list of passwords to try, I bet it is nabiha@jamile
+
+#sending a GET request to the login page to get the cookies
+session = requests.session()
+response = session.get(login_url)
+post_url = re.search(r'<form .*?action="(.+?)"', response.text).group(1) #extract the POST URL
+csrf_token = re.search(r'<input type="hidden" name="csrf_token" value="(.+?)">', response.text).group(1)
+
+#try to login using the passwords
+for password in passwords:
+    #construct POST data
+    data = {
+        "username": username,
+        "password": password,
+        "csrf_token": csrf_token
+    }
+    
+    #send the POST request to post_url using the constructed data
+    response = session.post(post_url, data=data)
+    
+    #check if the login was successful
+    if "Welcome, " in response.text:
+        print(f"Login successful with password: {password}")
+        break
+    else:
+        print(f"Login failed with password: {password}")
