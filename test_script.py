@@ -21,13 +21,15 @@ for file in files:
 with open('./input_files/dirs_dictionary.bat', 'r') as file: #read dirs_dictionary input file
         for line in file: #iterate over given directories
             full_url = url+line
-
-            get = requests.get(full_url)
-            #if the request succeeds, it means the url is valid
-            if get.status_code in range(200,299):
-                print("reachable")
-                directories_output.write(full_url) #append the url to directories_output file 
-                directories_output.write("\n")
+            try:
+                get = requests.get(full_url)
+                #if the request succeeds, it means the url is valid
+                if get.status_code in range(200,299):
+                    print("reachable")
+                    directories_output.write(full_url) #append the url to directories_output file 
+                    directories_output.write("\n")
+            except:
+                print("unable to reach "+full_url)
 file.close() # Close the file
 
 with open('./input_files/subdomains_dictionary.bat', 'r') as file2: #read subdomains_dictionary input file
@@ -38,11 +40,14 @@ with open('./input_files/subdomains_dictionary.bat', 'r') as file2: #read subdom
         full_url2 = f"{parts.group(1) or 'https://'}{line.strip()}.{parts.group(2)}{parts.group(3)}"
         #using strip to remove the trailing new line and get a full link
 
-        get2 = requests.get(full_url2)
-        #if the request succeeds, it means the url is valid
-        if get2.status_code in range(200,299):
-            subdomains_output.write(full_url2) #append the url to subdomains_output file
-            subdomains_output.write("\n")
+        try:
+            get2 = requests.get(full_url2)
+            #if the request succeeds, it means the url is valid
+            if get2.status_code in range(200,299):
+                subdomains_output.write(full_url2) #append the url to subdomains_output file
+                subdomains_output.write("\n")
+        except:
+            print("unable to reach "+full_url2)
 file2.close() # Close the files
 
 files_output.close()
