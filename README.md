@@ -1,4 +1,4 @@
-# ScriptingProject2
+# WebsiteEnumerator
 <h1>Ethical Hacking Project</h1>
 <h2>By Elie Hanna</h2>
 <img src="/istockphoto-1297795284-170667a.jpg" alt="Alt text" title="Image">
