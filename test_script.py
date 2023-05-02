@@ -62,8 +62,8 @@ login_url = "http://quotes.toscrape.com/login"
 
 
 #login credentials
-username = "charbel_daoud"
-passwords = ["nabiha", "jamile", "nabiha@jamile"]  #list of passwords to try, I bet it is nabiha@jamile
+username = "test_username"
+passwords = ["test1", "test2", "test3"]  #list of passwords to try, I bet it is nabiha@jamile
 
 #sending a GET request to the login page to get the cookies
 session = requests.Session()
